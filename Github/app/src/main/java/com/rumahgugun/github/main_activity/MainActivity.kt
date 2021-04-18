@@ -105,15 +105,21 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.visibility = View.VISIBLE
 
     }
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu, menu)
-        return true
+        return super.onCreateOptionsMenu(menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.language_settings) {
-            val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(mIntent)
+        when(item.itemId){
+/*
+            R.id.favorite_page -> startActivity(Intent(this, FavoriteActivity::class.java))
+*/
+            R.id.language_settings -> startActivity(Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS))
+/*
+            R.id.alarm_settings -> startActivity(Intent(this, AlarmActivity::class.java))
+*/
         }
         return super.onOptionsItemSelected(item)
     }
