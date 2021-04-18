@@ -12,13 +12,13 @@ class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_USERNAME = "extra_username"
+        const val EXTRA_USER = "extra_user"
     }
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var viewModel: DetailViewModel
 
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -55,9 +55,9 @@ class DetailActivity : AppCompatActivity() {
                     } else {
                         tvLocationReceived.text = it.location
                     }
-                    tvFollower.text = "${it.followers.toString()} follower"
-                    tvFollowing.text = "${it.following.toString()} following"
-                    tvRepository.text = "${it.public_repos.toString()} repository"
+                    tvFollower.text = {"${it.followers.toString()} follower"}.toString()
+                    tvFollowing.text = {"${it.following.toString()} following"}.toString()
+                    tvRepository.text = {"${it.public_repos.toString()} repository"}.toString()
                 }
             }
         })
