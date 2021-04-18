@@ -1,7 +1,6 @@
 package com.rumahgugun.github.main_activity
 
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -25,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: UserSearchAdapter
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -55,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.icSearch.setOnClickListener {
             LoadingScreen().loadingScreen(true, binding.progressBar)
-            if(searchUser()==true){
+            if(searchUser()){
                 closeTextView(true)
             }else{
                 closeTextView(false)
@@ -69,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         binding.etQuery.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                 LoadingScreen().loadingScreen(true, binding.progressBar)
-                if(searchUser()==true){
+                if(searchUser()){
                     closeTextView(true)
                 }else{
                     closeTextView(false)
@@ -88,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             if (it != null) {
                 val getTotalUser = viewModel.getTotalUser()
                 if (adapter.itemCount != 0) {
-                    binding.tvFound.text = getTotalUser.toString() + " " + getString(R.string.user) + " - " + getString(R.string.showing) + " " + it.size.toString() + " " + getString(R.string.user)
+                    binding.tvFound.text = {"${getTotalUser.toString()} ${getString(R.string.user)} - ${getString(R.string.showing)} ${it.size} ${getString(R.string.user)}"}.toString()
                 } else {
                     closeTextView(false)
                     binding.tvFound.text = getString(R.string.user_not_found)
@@ -107,12 +105,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun searchUser(): Boolean {
         val query = binding.etQuery.text.toString()
-        if (query.isEmpty()) {
+        return if (query.isEmpty()) {
             binding.recyclerView.visibility = View.INVISIBLE
-            return false
+            false
         }else{
             viewModel.setSearchUser(query)
-            return true
+            true
         }
     }
 
