@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,12 +25,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: UserSearchAdapter
-
+    private fun loadingScreen(b: Boolean, progressBar: ProgressBar) = LoadingScreen().loadingScreen(b, progressBar)
+    private fun textTemp(string: String) = Other().textTemp(string)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        actionBar?.title = "Github User Finder"
+
         adapter = UserSearchAdapter()
         adapter.notifyDataSetChanged()
 
@@ -42,10 +44,9 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
         viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
+                this,
+                ViewModelProvider.NewInstanceFactory()
         ).get(MainViewModel::class.java)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -53,48 +54,51 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
 
         binding.icSearch.setOnClickListener {
-            LoadingScreen().loadingScreen(true, binding.progressBar)
-            if(searchUser()){
+            binding.recyclerView.visibility = View.INVISIBLE
+            binding.tvFound.visibility = View.INVISIBLE
+            loadingScreen(true, binding.progressBar)
+            if (searchUser()) {
                 closeTextView(true)
-            }else{
+            } else {
                 closeTextView(false)
-                LoadingScreen().loadingScreen(false, binding.progressBar)
-                binding.tvFound.visibility = View.INVISIBLE
+                loadingScreen(false, binding.progressBar)
             }
-            LoadingScreen().loadingScreen(false, binding.progressBar)
 
         }
 
         binding.etQuery.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                LoadingScreen().loadingScreen(true, binding.progressBar)
-                if(searchUser()){
+                binding.recyclerView.visibility = View.INVISIBLE
+                binding.tvFound.visibility = View.INVISIBLE
+                loadingScreen(true, binding.progressBar)
+                if (searchUser()) {
                     closeTextView(true)
-                }else{
+                } else {
                     closeTextView(false)
-                    LoadingScreen().loadingScreen(false, binding.progressBar)
-                    binding.tvFound.visibility = View.INVISIBLE
+                    loadingScreen(false, binding.progressBar)
                 }
+
                 return@setOnKeyListener true
 
             }
             return@setOnKeyListener false
         }
 
+
         viewModel.getSearchUser().observe(this, {
             adapter.setList(it)
             binding.recyclerView.visibility = View.VISIBLE
             if (it != null) {
-                val getTotalUser = viewModel.getTotalUser()
                 if (adapter.itemCount != 0) {
-                    binding.tvFound.text = Other().textTemp("${getTotalUser.toString()} ${getString(R.string.user)} - ${getString(R.string.showing)} ${it.size} ${getString(R.string.user)}")
+                    val getTotalUser = viewModel.getTotalUser()
+                    binding.tvFound.text = textTemp("$getTotalUser ${getString(R.string.user)} - ${getString(R.string.showing)} ${it.size} ${getString(R.string.user)}")
                 } else {
                     closeTextView(false)
                     binding.tvFound.text = getString(R.string.user_not_found)
                 }
                 binding.tvFound.visibility = View.VISIBLE
             }
-            LoadingScreen().loadingScreen(false, binding.progressBar)
+            loadingScreen(false, binding.progressBar)
         })
     }
 
@@ -109,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         return if (query.isEmpty()) {
             binding.recyclerView.visibility = View.INVISIBLE
             false
-        }else{
+        } else {
             viewModel.setSearchUser(query)
             true
         }
@@ -120,8 +124,9 @@ class MainActivity : AppCompatActivity() {
         inflater.inflate(R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
 /*
             R.id.favorite_page -> startActivity(Intent(this, FavoriteActivity::class.java))
 */

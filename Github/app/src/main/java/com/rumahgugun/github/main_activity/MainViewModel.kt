@@ -1,5 +1,6 @@
 package com.rumahgugun.github.main_activity
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +15,7 @@ import retrofit2.Response
 class MainViewModel : ViewModel() {
 
     val listUser = MutableLiveData<ArrayList<UserDetail>>()
-    var totalCount:Long? = 0
+    private var totalCount: Long? = null
 
     fun setSearchUser(query: String) {
         RetrofitClient.apiInstance
