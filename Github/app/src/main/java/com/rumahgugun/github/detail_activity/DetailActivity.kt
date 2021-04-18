@@ -18,8 +18,8 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var viewModel: DetailViewModel
-    private lateinit var username:String
-    private lateinit var userDetail:UserDetail
+    private lateinit var username: String
+    private lateinit var userDetail: UserDetail
     private fun textTemp(string: String): String = Other().textTemp(string)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,15 +30,16 @@ class DetailActivity : AppCompatActivity() {
 
         val bundle = Bundle()
         bundle.putString(EXTRA_USERNAME, username)
+
         title = "$username Details"
 
 
         viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
+                this,
+                ViewModelProvider.NewInstanceFactory()
         ).get(DetailViewModel::class.java)
 
-            viewModel.setUserDetail(username)
+        viewModel.setUserDetail(username)
 
         viewModel.getUserDetail().observe(this, {
             if (it != null) {
@@ -46,8 +47,8 @@ class DetailActivity : AppCompatActivity() {
                     tvNameReceived.text = it.name
                     tvUsernameReceived.text = it.login
                     Glide.with(this@DetailActivity)
-                        .load(it.avatar_url)
-                        .into(imgReceived)
+                            .load(it.avatar_url)
+                            .into(imgReceived)
                     if (it.company == null) {
                         tvCompanyReceived.visibility = View.GONE
                     } else {
