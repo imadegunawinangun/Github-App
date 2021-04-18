@@ -54,14 +54,28 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
 
         binding.icSearch.setOnClickListener {
-            closeTextView(true)
-            searchUser()
+            LoadingScreen().loadingScreen(true, binding.progressBar)
+            if(searchUser()==true){
+                closeTextView(true)
+            }else{
+                closeTextView(false)
+                LoadingScreen().loadingScreen(false, binding.progressBar)
+                binding.tvFound.visibility = View.INVISIBLE
+            }
+            LoadingScreen().loadingScreen(false, binding.progressBar)
+
         }
 
         binding.etQuery.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                closeTextView(true)
-                searchUser()
+                LoadingScreen().loadingScreen(true, binding.progressBar)
+                if(searchUser()==true){
+                    closeTextView(true)
+                }else{
+                    closeTextView(false)
+                    LoadingScreen().loadingScreen(false, binding.progressBar)
+                    binding.tvFound.visibility = View.INVISIBLE
+                }
                 return@setOnKeyListener true
 
             }
@@ -69,17 +83,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.getSearchUser().observe(this, {
+            adapter.setList(it)
+            binding.recyclerView.visibility = View.VISIBLE
             if (it != null) {
-                adapter.setList(it)
                 val getTotalUser = viewModel.getTotalUser()
                 if (adapter.itemCount != 0) {
-                    binding.tvFound.text = getTotalUser.toString() + " "+ getString(R.string.user) + " - "+ getString(R.string.showing) +" " + it.size.toString() +" "+getString(R.string.user)
+                    binding.tvFound.text = getTotalUser.toString() + " " + getString(R.string.user) + " - " + getString(R.string.showing) + " " + it.size.toString() + " " + getString(R.string.user)
                 } else {
                     closeTextView(false)
                     binding.tvFound.text = getString(R.string.user_not_found)
                 }
                 binding.tvFound.visibility = View.VISIBLE
             }
+            LoadingScreen().loadingScreen(false, binding.progressBar)
         })
     }
 
@@ -87,20 +103,17 @@ class MainActivity : AppCompatActivity() {
         binding.textView.visibility = View.GONE
     } else {
         binding.textView.visibility = View.VISIBLE
-
     }
 
-    private fun searchUser() {
+    private fun searchUser(): Boolean {
         val query = binding.etQuery.text.toString()
         if (query.isEmpty()) {
             binding.recyclerView.visibility = View.INVISIBLE
-            closeTextView(false)
-            return
+            return false
+        }else{
+            viewModel.setSearchUser(query)
+            return true
         }
-        viewModel.setSearchUser(query)
-        LoadingScreen().loadingScreen(true, binding.progressBar)
-        binding.recyclerView.visibility = View.VISIBLE
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
