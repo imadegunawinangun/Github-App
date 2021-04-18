@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Github User Finder</string>
+    <string name="name">name</string>
+    <string name="username">username</string>
+    <string name="hint_search">search here</string>
+    <string name="search_icon">search</string>
+    <string name="start_your_finding_by_typing_in_search_bar">Start your finding by typing in search bar</string>
+    <string name="user_not_found">User Not Found!</string>
+    <string name="company">company</string>
+    <string name="location">location</string>
+    <string name="follower">follower</string>
+    <string name="following">following</string>
+    <string name="repository">repository</string>
+    <string name="tab_1">Followers</string>
+    <string name="tab_2">Following</string>
+    <string name="todo">TODO</string>
+    <string name="language_settings">Language</string>
+</resources>
