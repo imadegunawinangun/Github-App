@@ -71,16 +71,14 @@ class MainActivity : AppCompatActivity() {
         viewModel.getSearchUser().observe(this, {
             if (it != null) {
                 adapter.setList(it)
-                binding.tvFound.visibility = View.VISIBLE
-                if (it.size == 1) {
-                    binding.tvFound.text = "showing ${it.size} user"
+                val getTotalUser = viewModel.getTotalUser()
+                if (adapter.itemCount != 0) {
+                    binding.tvFound.text = getTotalUser.toString() + " "+ getString(R.string.user) + " - "+ getString(R.string.showing) +" " + it.size.toString() +" "+getString(R.string.user)
                 } else {
-                    binding.tvFound.text = "showing ${it.size} users"
+                    closeTextView(false)
+                    binding.tvFound.text = getString(R.string.user_not_found)
                 }
-                LoadingScreen().loadingScreen(false, binding.progressBar)
-            } else {
-                closeTextView(false)
-
+                binding.tvFound.visibility = View.VISIBLE
             }
         })
     }

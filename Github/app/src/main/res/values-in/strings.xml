@@ -15,5 +15,7 @@
     <string name="tab_1">Followers</string>
     <string name="tab_2">Following</string>
     <string name="todo">TODO</string>
-    <string name="language_settings">Bahasa</string>
+    <string name="language_settings">Pengaturan Bahasa</string>
+    <string name="user">pengguna</string>
+    <string name="showing">menampilkan</string>
 </resources>

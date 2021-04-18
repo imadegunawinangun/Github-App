@@ -15,4 +15,6 @@
     <string name="tab_2">Following</string>
     <string name="todo">TODO</string>
     <string name="language_settings">Language</string>
+    <string name="user">user</string>
+    <string name="showing">showing</string>
 </resources>
