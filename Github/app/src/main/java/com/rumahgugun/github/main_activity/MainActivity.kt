@@ -95,7 +95,6 @@ class MainActivity : AppCompatActivity() {
         if (query.isEmpty()) {
             binding.recyclerView.visibility = View.INVISIBLE
             closeTextView(false)
-            binding.tvFound.visibility = View.GONE
             return
         }
         viewModel.setSearchUser(query)
@@ -114,7 +113,7 @@ class MainActivity : AppCompatActivity() {
 /*
             R.id.favorite_page -> startActivity(Intent(this, FavoriteActivity::class.java))
 */
-            R.id.language_settings -> startActivity(Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS))
+            R.id.language_settings -> startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
 /*
             R.id.alarm_settings -> startActivity(Intent(this, AlarmActivity::class.java))
 */
