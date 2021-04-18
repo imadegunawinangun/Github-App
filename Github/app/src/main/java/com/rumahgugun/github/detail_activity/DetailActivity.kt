@@ -1,12 +1,13 @@
 package com.rumahgugun.github.detail_activity
 
-import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.rumahgugun.github.data.UserDetail
 import com.rumahgugun.github.databinding.ActivityDetailBinding
+import com.rumahgugun.github.other.Other
 
 class DetailActivity : AppCompatActivity() {
 
@@ -17,26 +18,28 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var viewModel: DetailViewModel
-
-
+    private lateinit var username:String
+    private lateinit var userDetail:UserDetail
+    private fun textTemp(string: String): String = Other().textTemp(string)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        actionBar?.title = "Details"
+        userDetail = intent.getParcelableExtra<UserDetail>(EXTRA_USER) as UserDetail
+        username = userDetail.login
 
-        val username = intent.getStringExtra(EXTRA_USERNAME)
         val bundle = Bundle()
         bundle.putString(EXTRA_USERNAME, username)
+        title = "$username Details"
+
 
         viewModel = ViewModelProvider(
             this,
             ViewModelProvider.NewInstanceFactory()
         ).get(DetailViewModel::class.java)
 
-        if (username != null) {
             viewModel.setUserDetail(username)
-        }
+
         viewModel.getUserDetail().observe(this, {
             if (it != null) {
                 binding.apply {
@@ -55,9 +58,9 @@ class DetailActivity : AppCompatActivity() {
                     } else {
                         tvLocationReceived.text = it.location
                     }
-                    tvFollower.text = {"${it.followers.toString()} follower"}.toString()
-                    tvFollowing.text = {"${it.following.toString()} following"}.toString()
-                    tvRepository.text = {"${it.public_repos.toString()} repository"}.toString()
+                    tvFollower.text = textTemp("${it.followers.toString()} follower")
+                    tvFollowing.text = textTemp("${it.following.toString()} following")
+                    tvRepository.text = textTemp("${it.public_repos.toString()} repository")
                 }
             }
         })
@@ -67,6 +70,5 @@ class DetailActivity : AppCompatActivity() {
             viewPager.adapter = sectionPagerAdapter
             tabLayout.setupWithViewPager(viewPager)
         }
-
     }
 }

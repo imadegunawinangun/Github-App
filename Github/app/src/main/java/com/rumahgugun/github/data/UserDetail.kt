@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @kotlinx.parcelize.Parcelize
 @Entity(tableName = "user_detail")
 data class UserDetail (
-        var login: String?,
+        var login: String,
         @PrimaryKey
         var id: Int,
         var node_id: String?,

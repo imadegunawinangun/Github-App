@@ -2,20 +2,18 @@ package com.rumahgugun.github.detail_activity
 
 import android.content.Context
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.rumahgugun.github.R
 
-class SectionPagerAdapter(private val mCtx: Context, fm: FragmentManager, data: Bundle) :
+class SectionPagerAdapter(private val mCtx: Context, fm: FragmentManager, bundle: Bundle) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private var fragmentBundle: Bundle = data
+    private var fragmentBundle: Bundle = bundle
 
 
-    @StringRes
-    private val TAB_TITLES = intArrayOf(R.string.tab_1, R.string.tab_2)
+    private val tabTitles = intArrayOf(R.string.tab_1, R.string.tab_2)
 
 
     override fun getCount(): Int {
@@ -33,7 +31,7 @@ class SectionPagerAdapter(private val mCtx: Context, fm: FragmentManager, data: 
     }
 
     override fun getPageTitle(position: Int): CharSequence {
-        return mCtx.resources.getString(TAB_TITLES[position])
+        return mCtx.resources.getString(tabTitles[position])
     }
 
 

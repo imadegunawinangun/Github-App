@@ -1,11 +1,13 @@
 package com.rumahgugun.github.detail_activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rumahgugun.github.R
+import com.rumahgugun.github.data.UserDetail
 import com.rumahgugun.github.databinding.FragmentFollowBinding
 import com.rumahgugun.github.main_activity.UserSearchAdapter
 import com.rumahgugun.github.other.LoadingScreen
@@ -30,6 +32,14 @@ class FollowersFragment : Fragment(R.layout.fragment_follow) {
         adapter = UserSearchAdapter()
         adapter.notifyDataSetChanged()
 
+        adapter.setOnItemClickCallback(object : UserSearchAdapter.OnItemClickCallback {
+            override fun onItemClicked(user: UserDetail) {
+                val moveWithObjectIntent = Intent(activity, DetailActivity::class.java)
+                moveWithObjectIntent.putExtra(DetailActivity.EXTRA_USER, user)
+                startActivity(moveWithObjectIntent)
+            }
+        })
+
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.adapter = adapter
@@ -43,10 +53,9 @@ class FollowersFragment : Fragment(R.layout.fragment_follow) {
         viewModel.getListFollower().observe(viewLifecycleOwner, {
             if (it != null) {
                 adapter.setList(it)
-                LoadingScreen().loadingScreen(false, binding.progressBar)
             }
+            LoadingScreen().loadingScreen(false, binding.progressBar)
         })
-
     }
 
     override fun onDestroyView() {

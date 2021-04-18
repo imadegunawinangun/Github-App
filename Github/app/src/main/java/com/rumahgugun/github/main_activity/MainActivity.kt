@@ -16,6 +16,7 @@ import com.rumahgugun.github.data.UserDetail
 import com.rumahgugun.github.databinding.ActivityMainBinding
 import com.rumahgugun.github.detail_activity.DetailActivity
 import com.rumahgugun.github.other.LoadingScreen
+import com.rumahgugun.github.other.Other
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         adapter.setOnItemClickCallback(object : UserSearchAdapter.OnItemClickCallback {
             override fun onItemClicked(user: UserDetail) {
                 Intent(this@MainActivity, DetailActivity::class.java).also {
-                    it.putExtra(DetailActivity.EXTRA_USERNAME, user.login)
+                    it.putExtra(DetailActivity.EXTRA_USER, user)
                     startActivity(it)
                 }
             }
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             if (it != null) {
                 val getTotalUser = viewModel.getTotalUser()
                 if (adapter.itemCount != 0) {
-                    binding.tvFound.text = {"${getTotalUser.toString()} ${getString(R.string.user)} - ${getString(R.string.showing)} ${it.size} ${getString(R.string.user)}"}.toString()
+                    binding.tvFound.text = Other().textTemp("${getTotalUser.toString()} ${getString(R.string.user)} - ${getString(R.string.showing)} ${it.size} ${getString(R.string.user)}")
                 } else {
                     closeTextView(false)
                     binding.tvFound.text = getString(R.string.user_not_found)
