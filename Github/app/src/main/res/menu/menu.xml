@@ -5,4 +5,14 @@
         android:id="@+id/language_settings"
         android:title="@string/language_settings"
         app:showAsAction="collapseActionView|never" />
+    <item
+        android:id="@+id/favorite_page"
+        android:title="@string/my_favorite"
+        android:icon="@drawable/ic_baseline_favorite_white_24"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/alarm_settings"
+        android:title="@string/alarm"
+        android:icon="@drawable/ic_baseline_access_alarm_24"
+        app:showAsAction="ifRoom"/>
 </menu>

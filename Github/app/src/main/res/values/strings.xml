@@ -17,4 +17,7 @@
     <string name="language_settings">Language</string>
     <string name="user">user</string>
     <string name="showing">showing</string>
+    <string name="my_favorite">My Favorite</string>
+    <string name="your_favorite_user_will_appear_here">Your favorite user will appear here!</string>
+    <string name="alarm" translatable="false">Alarm</string>
 </resources>

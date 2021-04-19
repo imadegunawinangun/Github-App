@@ -55,6 +55,49 @@ class UserSearchAdapter : RecyclerView.Adapter<UserSearchAdapter.UserViewHolder>
         holder.bind(list[position])
     }
 
+    fun setList(userDetail: List<UserDetail>?) {
+        list.clear()
+        if (userDetail != null) {
+            for (user in userDetail){
+                val userMapped = UserDetail(
+                    user.login,
+                    user.id,
+                    user.node_id,
+                    user.avatar_url,
+                    user.gravatar_id,
+                    user.url,
+                    user.html_url,
+                    user.followers_url,
+                    user.following_url,
+                    user.gists_url,
+                    user.starred_url,
+                    user.subscriptions_url,
+                    user.organizations_url,
+                    user.repos_url,
+                    user.events_url,
+                    user.received_events_url,
+                    user.type,
+                    user.site_admin,
+                    user.score,
+                    user.name,
+                    user.company,
+                    user.blog,
+                    user.location,
+                    user.email,
+                    user.hireable,
+                    user.bio,
+                    user.twitter_username,
+                    user.public_repos,
+                    user.public_gists,
+                    user.followers,
+                    user.following
+                )
+                list.add(userMapped)
+                notifyDataSetChanged()
+            }
+        }
+    }
+
     interface OnItemClickCallback {
         fun onItemClicked(user: UserDetail)
     }

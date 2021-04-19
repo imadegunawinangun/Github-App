@@ -17,7 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DetailViewModel(application: Application) : AndroidViewModel(application) {
-    val user = MutableLiveData<UserDetail>()
+    private val user = MutableLiveData<UserDetail>()
 
     private var userDetailDao: UserDetailDao?
     private var userDatabase: UserDatabase? = UserDatabase.getDatabase(application)

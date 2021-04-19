@@ -18,4 +18,6 @@
     <string name="language_settings">Pengaturan Bahasa</string>
     <string name="user">pengguna</string>
     <string name="showing">menampilkan</string>
+    <string name="your_favorite_user_will_appear_here">Pengguna favoritmu akan tampil disini!</string>
+    <string name="my_favorite">Favoritku</string>
 </resources>

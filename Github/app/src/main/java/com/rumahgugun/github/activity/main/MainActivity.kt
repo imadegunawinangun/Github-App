@@ -16,6 +16,7 @@ import com.rumahgugun.github.R
 import com.rumahgugun.github.data.UserDetail
 import com.rumahgugun.github.databinding.ActivityMainBinding
 import com.rumahgugun.github.activity.detail.DetailActivity
+import com.rumahgugun.github.activity.listfavorite.ListFavoriteActivity
 import com.rumahgugun.github.other.LoadingScreen
 import com.rumahgugun.github.other.Other
 
@@ -127,9 +128,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-/*
-            R.id.favorite_page -> startActivity(Intent(this, FavoriteActivity::class.java))
-*/
+            R.id.favorite_page -> startActivity(Intent(this, ListFavoriteActivity::class.java))
             R.id.language_settings -> startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
 /*
             R.id.alarm_settings -> startActivity(Intent(this, AlarmActivity::class.java))
