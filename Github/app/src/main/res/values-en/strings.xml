@@ -18,6 +18,9 @@
     <string name="language_settings">Language</string>
     <string name="user">user</string>
     <string name="showing">showing</string>
+<<<<<<< HEAD
     <string name="your_favorite_user_will_appear_here">Your favorite user will appear here!</string>
     <string name="my_favorite">My Favorite</string>
+=======
+>>>>>>> 876c1561c8caabce609a04a81f2d0760c65955ed
 </resources>

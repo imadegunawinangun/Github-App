@@ -90,9 +90,16 @@ class MainActivity : AppCompatActivity() {
             adapter.setList(it)
             binding.recyclerView.visibility = View.VISIBLE
             if (it != null) {
+<<<<<<< HEAD:Github/app/src/main/java/com/rumahgugun/github/activity/main/MainActivity.kt
                 if (adapter.itemCount != 0) {
                     val getTotalUser = viewModel.getTotalUser()
                     binding.tvFound.text = textTemp("$getTotalUser ${getString(R.string.user)} - ${getString(R.string.showing)} ${it.size} ${getString(R.string.user)}")
+=======
+                adapter.setList(it)
+                val getTotalUser = viewModel.getTotalUser()
+                if (adapter.itemCount != 0) {
+                    binding.tvFound.text = getTotalUser.toString() + " "+ getString(R.string.user) + " - "+ getString(R.string.showing) +" " + it.size.toString() +" "+getString(R.string.user)
+>>>>>>> 876c1561c8caabce609a04a81f2d0760c65955ed:Github/app/src/main/java/com/rumahgugun/github/main_activity/MainActivity.kt
                 } else {
                     closeTextView(false)
                     binding.tvFound.text = getString(R.string.user_not_found)
