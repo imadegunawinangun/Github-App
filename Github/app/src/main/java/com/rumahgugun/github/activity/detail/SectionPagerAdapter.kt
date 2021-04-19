@@ -1,4 +1,4 @@
-package com.rumahgugun.github.detail_activity
+package com.rumahgugun.github.activity.detail
 
 import android.content.Context
 import android.os.Bundle

@@ -1,11 +1,12 @@
 package com.rumahgugun.github.other
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
+import com.rumahgugun.github.activity.main.MainActivity
 import com.rumahgugun.github.databinding.ActivitySplashScreenBinding
-import com.rumahgugun.github.main_activity.MainActivity
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -19,7 +20,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()

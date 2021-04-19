@@ -1,4 +1,4 @@
-package com.rumahgugun.github.detail_activity
+package com.rumahgugun.github.activity.detail
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -10,12 +10,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FollowersViewModel : ViewModel() {
+class FollowingViewModel : ViewModel() {
     val listFollowers = MutableLiveData<ArrayList<UserDetail>>()
 
-    fun setListFollowers(username: String) {
+    fun setListFollowing(username: String) {
         RetrofitClient.apiInstance
-            .getFollowers(username)
+            .getFollowing(username)
             .enqueue(object : Callback<ArrayList<UserDetail>> {
                 override fun onResponse(
                     call: Call<ArrayList<UserDetail>>,

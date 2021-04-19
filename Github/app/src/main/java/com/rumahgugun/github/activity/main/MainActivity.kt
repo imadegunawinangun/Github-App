@@ -1,4 +1,4 @@
-package com.rumahgugun.github.main_activity
+package com.rumahgugun.github.activity.main
 
 
 import android.content.Intent
@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rumahgugun.github.R
 import com.rumahgugun.github.data.UserDetail
 import com.rumahgugun.github.databinding.ActivityMainBinding
-import com.rumahgugun.github.detail_activity.DetailActivity
+import com.rumahgugun.github.activity.detail.DetailActivity
 import com.rumahgugun.github.other.LoadingScreen
 import com.rumahgugun.github.other.Other
 

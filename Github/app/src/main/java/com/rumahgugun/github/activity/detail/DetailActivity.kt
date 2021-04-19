@@ -1,4 +1,4 @@
-package com.rumahgugun.github.detail_activity
+package com.rumahgugun.github.activity.detail
 
 import android.os.Bundle
 import android.view.View
@@ -8,6 +8,10 @@ import com.bumptech.glide.Glide
 import com.rumahgugun.github.data.UserDetail
 import com.rumahgugun.github.databinding.ActivityDetailBinding
 import com.rumahgugun.github.other.Other
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailActivity : AppCompatActivity() {
 
@@ -27,7 +31,7 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         userDetail = intent.getParcelableExtra<UserDetail>(EXTRA_USER) as UserDetail
         username = userDetail.login
-
+        val id = userDetail.id
         val bundle = Bundle()
         bundle.putString(EXTRA_USERNAME, username)
 
@@ -35,8 +39,7 @@ class DetailActivity : AppCompatActivity() {
 
 
         viewModel = ViewModelProvider(
-                this,
-                ViewModelProvider.NewInstanceFactory()
+                this
         ).get(DetailViewModel::class.java)
 
         viewModel.setUserDetail(username)
@@ -65,6 +68,33 @@ class DetailActivity : AppCompatActivity() {
                 }
             }
         })
+
+        var isChecked = false
+        CoroutineScope(Dispatchers.IO).launch {
+            val count = viewModel.checkUser(id)
+            withContext(Dispatchers.Main) {
+                if (count != null) {
+                    if (count > 0) {
+                        binding.toggleButton.isChecked = true
+                        isChecked = true
+                    } else {
+                        binding.toggleButton.isChecked = false
+                        isChecked = false
+                    }
+                }
+            }
+        }
+
+        binding.toggleButton.setOnClickListener{
+            isChecked = !isChecked
+            if(isChecked)
+            {
+                viewModel.addToFavorite(userDetail)
+            } else{
+                viewModel.removeFromFavorite(id)
+            }
+            binding.toggleButton.isChecked = isChecked
+        }
 
         val sectionPagerAdapter = SectionPagerAdapter(this, supportFragmentManager, bundle)
         binding.apply {

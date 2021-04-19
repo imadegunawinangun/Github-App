@@ -1,4 +1,4 @@
-package com.rumahgugun.github.detail_activity
+package com.rumahgugun.github.activity.detail
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rumahgugun.github.R
 import com.rumahgugun.github.data.UserDetail
 import com.rumahgugun.github.databinding.FragmentFollowBinding
-import com.rumahgugun.github.main_activity.UserSearchAdapter
+import com.rumahgugun.github.activity.main.UserSearchAdapter
 import com.rumahgugun.github.other.LoadingScreen
 
 

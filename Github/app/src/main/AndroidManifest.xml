@@ -19,8 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".detail_activity.DetailActivity" />
-        <activity android:name=".main_activity.MainActivity" />
+        <activity android:name="com.rumahgugun.github.activity.detail.DetailActivity" />
+        <activity android:name="com.rumahgugun.github.activity.main.MainActivity" />
     </application>
 
 </manifest>

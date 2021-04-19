@@ -1,4 +1,4 @@
-package com.rumahgugun.github.main_activity
+package com.rumahgugun.github.activity.main
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -41,7 +41,7 @@ class UserSearchAdapter : RecyclerView.Adapter<UserSearchAdapter.UserViewHolder>
             Glide.with(itemView)
                 .load(user.avatar_url)
                 .into(binding.imgItemPhoto)
-            binding.tvUsername.text = "${user.login}"
+            binding.tvUsername.text = user.login
             return
         }
     }

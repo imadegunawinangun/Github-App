@@ -1,6 +1,5 @@
-package com.rumahgugun.github.main_activity
+package com.rumahgugun.github.activity.main
 
-import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
