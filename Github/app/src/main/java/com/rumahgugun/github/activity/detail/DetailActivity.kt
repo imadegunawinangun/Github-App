@@ -1,13 +1,21 @@
 package com.rumahgugun.github.activity.detail
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.rumahgugun.github.R
+import com.rumahgugun.github.activity.alarm.AlarmActivity
+import com.rumahgugun.github.activity.listfavorite.ListFavoriteActivity
 import com.rumahgugun.github.data.UserDetail
 import com.rumahgugun.github.databinding.ActivityDetailBinding
 import com.rumahgugun.github.other.Other
+import com.rumahgugun.github.other.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,7 +29,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var viewModel: DetailViewModel
+    private lateinit var viewModel: ViewModel
     private lateinit var username: String
     private lateinit var userDetail: UserDetail
     private fun textTemp(string: String): String = Other().textTemp(string)
@@ -40,7 +48,7 @@ class DetailActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(
                 this
-        ).get(DetailViewModel::class.java)
+        ).get(ViewModel::class.java)
 
         viewModel.setUserDetail(username)
 
@@ -101,5 +109,27 @@ class DetailActivity : AppCompatActivity() {
             viewPager.adapter = sectionPagerAdapter
             tabLayout.setupWithViewPager(viewPager)
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.favorite_page ->{
+                startActivity(Intent(this, ListFavoriteActivity::class.java))
+                finish()
+            }
+            R.id.language_settings ->{
+                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+                finish()
+            }
+            R.id.alarm_settings ->{
+                startActivity(Intent(this, AlarmActivity::class.java))
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

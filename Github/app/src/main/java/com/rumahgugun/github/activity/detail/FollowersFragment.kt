@@ -11,6 +11,7 @@ import com.rumahgugun.github.data.UserDetail
 import com.rumahgugun.github.databinding.FragmentFollowBinding
 import com.rumahgugun.github.activity.main.UserSearchAdapter
 import com.rumahgugun.github.other.LoadingScreen
+import com.rumahgugun.github.other.ViewModel
 
 
 class FollowersFragment : Fragment(R.layout.fragment_follow) {
@@ -18,7 +19,7 @@ class FollowersFragment : Fragment(R.layout.fragment_follow) {
     private var _binding: FragmentFollowBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: FollowersViewModel
+    private lateinit var viewModel: ViewModel
     private lateinit var adapter: UserSearchAdapter
     private lateinit var username: String
 
@@ -46,11 +47,10 @@ class FollowersFragment : Fragment(R.layout.fragment_follow) {
 
         LoadingScreen().loadingScreen(true, binding.progressBar)
         viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(FollowersViewModel::class.java)
+            this
+        ).get(ViewModel::class.java)
         viewModel.setListFollowers(username)
-        viewModel.getListFollower().observe(viewLifecycleOwner, {
+        viewModel.getListUser().observe(viewLifecycleOwner, {
             if (it != null) {
                 adapter.setList(it)
             }

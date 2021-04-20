@@ -1,4 +1,4 @@
-package com.rumahgugun.github.activity.listfavorite
+package com.rumahgugun.github.activity.alarm
 
 import android.app.SearchManager
 import android.content.Context
@@ -8,60 +8,59 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.rumahgugun.github.R
-import com.rumahgugun.github.activity.alarm.AlarmActivity
 import com.rumahgugun.github.activity.detail.DetailActivity
+import com.rumahgugun.github.activity.detail.DetailActivity.Companion.EXTRA_USERNAME
+import com.rumahgugun.github.activity.detail.DetailViewModel
+import com.rumahgugun.github.activity.listfavorite.ListFavoriteActivity
 import com.rumahgugun.github.activity.main.MainActivity
-import com.rumahgugun.github.activity.main.UserSearchAdapter
-import com.rumahgugun.github.data.UserDetail
-import com.rumahgugun.github.databinding.ActivityListFavoriteBinding
-import com.rumahgugun.github.other.Other
+import com.rumahgugun.github.databinding.ActivityAlarmBinding
+import com.rumahgugun.github.other.IsReminded
 import com.rumahgugun.github.other.ViewModel
+import com.rumahgugun.github.preference.IsRemindedPreference
+import com.rumahgugun.github.receiver.AlarmReceiver
 
-class ListFavoriteActivity : AppCompatActivity() {
+class AlarmActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityListFavoriteBinding
-    private lateinit var adapter: UserSearchAdapter
+    private lateinit var binding: ActivityAlarmBinding
+    private lateinit var isReminded: IsReminded
+    private lateinit var alarmReceiver: AlarmReceiver
     private lateinit var viewModel: ViewModel
-    private fun textTemp(string: String):String = Other().textTemp(string)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityListFavoriteBinding.inflate(layoutInflater)
+        binding = ActivityAlarmBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = UserSearchAdapter()
-        adapter.notifyDataSetChanged()
+        val alarmPreference = IsRemindedPreference(this)
+        if(alarmPreference.getReminder().isReminded){
+            binding.switch1.isChecked = true
+        } else{
+            binding.switch1.isChecked = false
+        }
 
-        viewModel= ViewModelProvider(this).get(ViewModel::class.java)
-
-        adapter.setOnItemClickCallback(object : UserSearchAdapter.OnItemClickCallback {
-            override fun onItemClicked(user: UserDetail) {
-                Intent(this@ListFavoriteActivity, DetailActivity::class.java).also {
-                    it.putExtra(DetailActivity.EXTRA_USER, user)
-                    startActivity(it)
-                }
+        alarmReceiver = AlarmReceiver()
+        binding.switch1.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                saveReminder(true)
+                alarmReceiver.setRepeatingAlarm(this, "RepeatingAlarm", "09:00","Github reminder")
+            }else{
+                saveReminder(false)
+                alarmReceiver.cancelAlarm(this)
             }
-        })
+        }
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.setHasFixedSize(false)
-        binding.recyclerView.adapter = adapter
-
-        viewModel.getFavoriteUser()?.observe(this,{
-            adapter.setList(it)
-            binding.tvFound.visibility = View.VISIBLE
-            binding.tvFound.text = textTemp(it.size.toString() + " " + getString(R.string.user))
-            binding.textView.visibility = View.GONE
-            if(it.isEmpty()){
-                binding.textView.visibility = View.VISIBLE
-            }
-        })
     }
+
+    private fun saveReminder(b: Boolean) {
+        val alarmPreference = IsRemindedPreference(this)
+        isReminded = IsReminded()
+        isReminded.isReminded =b
+        alarmPreference.setReminder(isReminded)
+
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_sub, menu)
@@ -73,7 +72,7 @@ class ListFavoriteActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                Intent(this@ListFavoriteActivity, MainActivity::class.java).also {
+                Intent(this@AlarmActivity, MainActivity::class.java).also {
                     it.putExtra(MainActivity.EXTRA_USERNAME, query)
                     startActivity(it)
                     return true
