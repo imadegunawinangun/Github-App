@@ -1,6 +1,4 @@
 package com.rumahgugun.github.activity.main
-
-
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -19,10 +17,7 @@ import com.rumahgugun.github.activity.detail.DetailActivity
 import com.rumahgugun.github.activity.listfavorite.ListFavoriteActivity
 import com.rumahgugun.github.other.LoadingScreen
 import com.rumahgugun.github.other.Other
-
-
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var adapter: UserSearchAdapter
@@ -32,10 +27,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         adapter = UserSearchAdapter()
         adapter.notifyDataSetChanged()
-
         adapter.setOnItemClickCallback(object : UserSearchAdapter.OnItemClickCallback {
             override fun onItemClicked(user: UserDetail) {
                 Intent(this@MainActivity, DetailActivity::class.java).also {
@@ -44,16 +37,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-
         viewModel = ViewModelProvider(
                 this,
                 ViewModelProvider.NewInstanceFactory()
         ).get(MainViewModel::class.java)
-
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.setHasFixedSize(false)
         binding.recyclerView.adapter = adapter
-
         binding.icSearch.setOnClickListener {
             binding.recyclerView.visibility = View.INVISIBLE
             binding.tvFound.visibility = View.INVISIBLE
@@ -64,9 +54,7 @@ class MainActivity : AppCompatActivity() {
                 closeTextView(false)
                 loadingScreen(false, binding.progressBar)
             }
-
         }
-
         binding.etQuery.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                 binding.recyclerView.visibility = View.INVISIBLE
@@ -78,14 +66,10 @@ class MainActivity : AppCompatActivity() {
                     closeTextView(false)
                     loadingScreen(false, binding.progressBar)
                 }
-
                 return@setOnKeyListener true
-
             }
             return@setOnKeyListener false
         }
-
-
         viewModel.getSearchUser().observe(this, {
             adapter.setList(it)
             binding.recyclerView.visibility = View.VISIBLE
@@ -93,18 +77,13 @@ class MainActivity : AppCompatActivity() {
                 if (adapter.itemCount != 0) {
                     val getTotalUser = viewModel.getTotalUser()
                     binding.tvFound.text = textTemp("$getTotalUser ${getString(R.string.user)} - ${getString(R.string.showing)} ${it.size} ${getString(R.string.user)}")
-                    adapter.setList(it)
-                    val getTotalUser = viewModel.getTotalUser()
-                    if (adapter.itemCount != 0) {
-                        binding.tvFound.text = getTotalUser.toString() + " " + getString(R.string.user) + " - " + getString(R.string.showing) + " " + it.size.toString() + " " + getString(R.string.user)
-                    } else {
-                        closeTextView(false)
-                        binding.tvFound.text = getString(R.string.user_not_found)
-                    }
-                    binding.tvFound.visibility = View.VISIBLE
+                } else {
+                    closeTextView(false)
+                    binding.tvFound.text = getString(R.string.user_not_found)
                 }
-                loadingScreen(false, binding.progressBar)
+                binding.tvFound.visibility = View.VISIBLE
             }
+            loadingScreen(false, binding.progressBar)
         })
     }
     private fun closeTextView(b: Boolean) = if (b) {
@@ -112,7 +91,6 @@ class MainActivity : AppCompatActivity() {
     } else {
         binding.textView.visibility = View.VISIBLE
     }
-
     private fun searchUser(): Boolean {
         val query = binding.etQuery.text.toString()
         return if (query.isEmpty()) {
@@ -123,13 +101,11 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.favorite_page -> startActivity(Intent(this, ListFavoriteActivity::class.java))
