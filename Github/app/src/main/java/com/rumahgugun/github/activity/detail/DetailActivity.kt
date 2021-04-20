@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.rumahgugun.github.R
 import com.rumahgugun.github.activity.alarm.AlarmActivity
-import com.rumahgugun.github.activity.listfavorite.ListFavoriteActivity
+import com.rumahgugun.github.activity.favorite.ListFavoriteActivity
 import com.rumahgugun.github.data.UserDetail
 import com.rumahgugun.github.databinding.ActivityDetailBinding
 import com.rumahgugun.github.other.Other

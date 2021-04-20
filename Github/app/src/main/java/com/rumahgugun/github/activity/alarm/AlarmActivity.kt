@@ -10,10 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import com.rumahgugun.github.R
-import com.rumahgugun.github.activity.detail.DetailActivity
-import com.rumahgugun.github.activity.detail.DetailActivity.Companion.EXTRA_USERNAME
-import com.rumahgugun.github.activity.detail.DetailViewModel
-import com.rumahgugun.github.activity.listfavorite.ListFavoriteActivity
+import com.rumahgugun.github.activity.favorite.ListFavoriteActivity
 import com.rumahgugun.github.activity.main.MainActivity
 import com.rumahgugun.github.databinding.ActivityAlarmBinding
 import com.rumahgugun.github.other.IsReminded

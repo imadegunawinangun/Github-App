@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activity.listfavorite.ListFavoriteActivity">
+    tools:context=".activity.favorite.ListFavoriteActivity">
     <TextView
         android:id="@+id/tv_found"
         android:layout_width="0dp"

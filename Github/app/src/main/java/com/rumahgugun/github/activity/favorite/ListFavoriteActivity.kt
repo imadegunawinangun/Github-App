@@ -1,4 +1,4 @@
-package com.rumahgugun.github.activity.listfavorite
+package com.rumahgugun.github.activity.favorite
 
 import android.app.SearchManager
 import android.content.Context
