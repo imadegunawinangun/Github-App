@@ -11,14 +11,14 @@ import com.rumahgugun.github.data.local.UserDatabase
 class UserContentProvider : ContentProvider() {
 
     companion object {
-        const val AUTHOITY = "com.rumahgugun.github"
+        const val AUTHORITY = "com.rumahgugun.github"
         const val TABLE_NAME = "user_detail"
         const val ID_FAVORITE_USER_DATA = 1
         val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
     }
 
     init {
-        uriMatcher.addURI(AUTHOITY, TABLE_NAME, ID_FAVORITE_USER_DATA)
+        uriMatcher.addURI(AUTHORITY, TABLE_NAME, ID_FAVORITE_USER_DATA)
     }
 
     private lateinit var userDetailDao: UserDetailDao
@@ -32,25 +32,26 @@ class UserContentProvider : ContentProvider() {
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-return null    }
+        return null
+    }
 
     override fun onCreate(): Boolean {
         userDetailDao = context?.let {
             UserDatabase.getDatabase(it)?.userDetailDao()
         }!!
-    return false
+        return false
     }
 
     override fun query(
         uri: Uri, projection: Array<String>?, selection: String?,
         selectionArgs: Array<String>?, sortOrder: String?
     ): Cursor? {
-        var cursor:Cursor?
-        when(uriMatcher.match(uri)){
+        val cursor: Cursor?
+        when (uriMatcher.match(uri)) {
             ID_FAVORITE_USER_DATA -> {
                 cursor = userDetailDao.findAll()
-                if (context!=null){
-                    cursor.setNotificationUri(context?.contentResolver,uri)
+                if (context != null) {
+                    cursor.setNotificationUri(context?.contentResolver, uri)
                 }
             }
             else -> {
@@ -64,5 +65,6 @@ return null    }
         uri: Uri, values: ContentValues?, selection: String?,
         selectionArgs: Array<String>?
     ): Int {
-return 0    }
+        return 0
+    }
 }

@@ -34,10 +34,10 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     private fun sendNotification(context: Context) {
-        val intent = context?.packageManager.getLaunchIntentForPackage("com.rumahgugun.github")
+        val intent = context.packageManager.getLaunchIntentForPackage("com.rumahgugun.github")
         val pendingIntent = PendingIntent.getActivity(context, 0, intent,0)
 
-        val notificationManager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setContentIntent(pendingIntent)
@@ -58,7 +58,7 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     fun setRepeatingAlarm(context: Context, type: String, time: String, message: String){
-        if(isDateInvalid(time, TIME_FORMAT)) return
+        if(isDateInvalid(time)) return
         val alarmManager= context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val intent = Intent(context, AlarmReceiver::class.java)
@@ -76,9 +76,9 @@ class AlarmReceiver : BroadcastReceiver() {
         Toast.makeText(context, "Repeating alarm set up", Toast.LENGTH_LONG).show()
     }
 
-    private fun isDateInvalid(time: String, timeFormat: String): Boolean {
+    private fun isDateInvalid(time: String): Boolean {
         return try {
-            val df = SimpleDateFormat(timeFormat, Locale.getDefault())
+            val df = SimpleDateFormat(TIME_FORMAT, Locale.getDefault())
             df.isLenient = false
             df.parse(time)
             false
@@ -94,7 +94,7 @@ class AlarmReceiver : BroadcastReceiver() {
         val pendingIntent = PendingIntent.getBroadcast(context,requestCode,intent,0)
         pendingIntent.cancel()
         alarmManager.cancel(pendingIntent)
-        Toast.makeText(context, "Repeating alarm dibatalkan", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Repeating alarm cancelled", Toast.LENGTH_LONG).show()
     }
 
 }

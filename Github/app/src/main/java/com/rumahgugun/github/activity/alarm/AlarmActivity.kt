@@ -3,18 +3,17 @@ package com.rumahgugun.github.activity.alarm
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.rumahgugun.github.R
 import com.rumahgugun.github.activity.favorite.ListFavoriteActivity
 import com.rumahgugun.github.activity.main.MainActivity
 import com.rumahgugun.github.databinding.ActivityAlarmBinding
 import com.rumahgugun.github.other.IsReminded
-import com.rumahgugun.github.other.ViewModel
 import com.rumahgugun.github.preference.IsRemindedPreference
 import com.rumahgugun.github.receiver.AlarmReceiver
 
@@ -23,7 +22,6 @@ class AlarmActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAlarmBinding
     private lateinit var isReminded: IsReminded
     private lateinit var alarmReceiver: AlarmReceiver
-    private lateinit var viewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,17 +29,13 @@ class AlarmActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val alarmPreference = IsRemindedPreference(this)
-        if(alarmPreference.getReminder().isReminded){
-            binding.switch1.isChecked = true
-        } else{
-            binding.switch1.isChecked = false
-        }
+        binding.switch1.isChecked = alarmPreference.getReminder().isReminded
 
         alarmReceiver = AlarmReceiver()
-        binding.switch1.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.switch1.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked){
                 saveReminder(true)
-                alarmReceiver.setRepeatingAlarm(this, "RepeatingAlarm", "09:00","Github reminder")
+                alarmReceiver.setRepeatingAlarm(this, "RepeatingAlarm", "08:59","Github reminder")
             }else{
                 saveReminder(false)
                 alarmReceiver.cancelAlarm(this)

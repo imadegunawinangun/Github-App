@@ -9,8 +9,6 @@
     <string name="company">company</string>
     <string name="location">location</string>
     <string name="follower">follower</string>
-    <string name="following">following</string>
-    <string name="repository">repository</string>
     <string name="tab_1">Followers</string>
     <string name="tab_2">Following</string>
     <string name="todo">TODO</string>
@@ -20,4 +18,7 @@
     <string name="my_favorite">My Favorite</string>
     <string name="your_favorite_user_will_appear_here">Your favorite user will appear here!</string>
     <string name="alarm" translatable="false">Alarm</string>
+    <string name="turn_off">Turn Off</string>
+    <string name="set_alarm">Set Alarm</string>
+    <string name="turn_on">Turn On</string>
 </resources>

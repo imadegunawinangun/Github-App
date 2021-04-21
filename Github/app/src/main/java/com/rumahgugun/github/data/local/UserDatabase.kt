@@ -19,7 +19,7 @@ abstract class UserDatabase: RoomDatabase() {
         fun getDatabase (context: Context): UserDatabase?{
             if(INSTANCE==null){
                 synchronized(UserDatabase::class){
-                    INSTANCE = Room.databaseBuilder(context.applicationContext, UserDatabase::class.java, "user_database").build()
+                    INSTANCE = Room.databaseBuilder(context.applicationContext, UserDatabase::class.java, "user_detail").build()
                 }
             }
             return INSTANCE
