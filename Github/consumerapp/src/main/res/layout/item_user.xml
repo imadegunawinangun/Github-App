@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,20 +9,31 @@
 
     <TextView
         android:id="@+id/tv_username"
+        style="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_vertical"
         android:textSize="18sp"
         android:textStyle="bold"
-        tools:text="@string/username"
-        android:layout_marginStart="8dp"
-        style="@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem"
-        android:gravity="center_vertical"/>
+        app:layout_constraintBottom_toTopOf="@+id/img_item_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="@string/username" />
+
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_item_photo"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_marginStart="-63dp"
-        tools:src="@android:color/background_dark"
-        android:id="@+id/img_item_photo">
-    </de.hdodenhof.circleimageview.CircleImageView>
-</androidx.appcompat.widget.LinearLayoutCompat>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_username"
+        app:layout_constraintHorizontal_bias="0.977"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:src="@android:color/background_dark" />
+</androidx.constraintlayout.widget.ConstraintLayout>
